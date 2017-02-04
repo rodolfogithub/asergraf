@@ -1,0 +1,49 @@
+html, body {height: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5;}
+.navbar { margin-bottom: 7px; }
+.breadcrumb { padding: 3px 6px; margin-bottom: 15px;}
+.wrap { min-height: 100%; height: auto; margin: 0 auto -34px; padding: 0 0 42px;}
+.wrap > .container { padding: 70px 15px 10px;}
+.footer {height: 28px; background-color: #f5f5f5; border-top: 1px solid #ddd; padding-top: 5px;}
+.jumbotron { text-align: center; background-color: transparent;}
+.jumbotron .btn { font-size: 21px; padding: 14px 24px;}
+.not-set {color: #c55; font-style: italic;}
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {position: relative; top: 1px; display: inline-block; font-family: 'Glyphicons Halflings'; font-style: normal; font-weight: normal; line-height: 1; padding-left: 5px;}
+a.asc:after { content: /*"\e113"*/ "\e151";}
+a.desc:after { content: /*"\e114"*/ "\e152";}
+.sort-numerical a.asc:after { content: "\e153";}
+.sort-numerical a.desc:after { content: "\e154";}
+.sort-ordinal a.asc:after { content: "\e155";}
+.sort-ordinal a.desc:after { content: "\e156";}
+.grid-view th { white-space: nowrap;}
+.hint-block { display: block;    margin-top: 5px;    color: #999;}
+
+.error-summary {color: #a94442; background: #fdf7f7; border-left: 3px solid #eed3d7; padding: 10px 20px; margin: 0 0 15px 0;}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout { padding: 15px; border: none;}
+
+@media(max-width:767px) {.nav li > form > button.logout { display:block; text-align: left; width: 100%; padding: 10px 15px;}}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover { text-decoration: none;}
+.nav > li > form > button.logout:focus { outline: none;}
+
+/* se reduce el espaciado entre campos en 10px */
+.row {margin-right: -10px; margin-left: -10px;}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3,
+.col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+.col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8,
+.col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,
+.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 { padding-right: 5px; padding-left: 5px;}
+
+/* Reduce el espacio entre label y cuadro de input y tambiÃ©n entre el borde izquierdo del input y el texto  */
+label {margin-bottom: 1px;}
+.form-control {padding: 6px 5px}
+
+/* No me da tanto espacio a los lados, OJO aquí generalizamos, pero lo podemos poner por vista */
+@media (min-width: 1400px) {
+	.container {
+		width: 1350px;
+	}
+}
