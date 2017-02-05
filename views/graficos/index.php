@@ -64,9 +64,12 @@ $idGrafico = 0;
 
 foreach ($traeDatos as $grafico) {                      // $traeDatos = todos los registros,  $grafico = un solo registro
 	$idGrafico++;
-	$datosY_1 = [];   $datosY_2 = [];  $datosY_3 = [];   // Hasta 3 series de datos en el eje Y
-	$datosY2_1 = [];  $datosY2_2 = [];                   // Hasta 2 series de datos en el eje Y2
 	$seriesY = [];    $seriesY2 = [];                    // Serie de datos
+
+	/* Se crean las seriesY */
+	for ($idx = 1; $idx < 4; $idx++) ${'datosY_'.($idx)} = [];
+	/* Se crean las seriesY2 */
+	for ($idx = 1; $idx < 3; $idx++) ${'datosY2_'.($idx)} = [];
 
 	$categorias  = [];   // EJE X
 	$tipoDatos = [];
@@ -91,32 +94,16 @@ foreach ($traeDatos as $grafico) {                      // $traeDatos = todos lo
 
 			if ($pasoY == false && strpos(strtoupper($key),'Y_') !== false) { // Eje Y
 				for ($idx=0; $idx<count($seriesY); $idx++) {
-					if ($idx==0) {
-						if (empty($datosY_1)) array_push($datosY_1,array_keys($seriesY[0])[0]);      // Pone el nombre asignado en la columna del SQl en $datosY_1[0]
-						array_push($datosY_1,array_values($datossql)[array_values($seriesY[0])[0]]); // Pone el valor de acuerdo al nombre de la columna
-					}
-					if ($idx==1) {
-						if (empty($datosY_2)) array_push($datosY_2,array_keys($seriesY[1])[0]);      // Pone el nombre asignado en la columna del SQl en $datosY_2[0]
-						array_push($datosY_2,array_values($datossql)[array_values($seriesY[1])[0]]); // Pone el valor de acuerdo al nombre de la columna
-					}
-					if ($idx==1) {
-						if (empty($datosY_3)) array_push($datosY_3,array_keys($seriesY[1])[0]);      // Pone el nombre asignado en la columna del SQl en $datosY_3[0]
-						array_push($datosY_3,array_values($datossql)[array_values($seriesY[1])[0]]); // Pone el valor de acuerdo al nombre de la columna
-					}
+					if (empty(${'datosY_'.($idx+1)})) ${'datosY_'.($idx+1)} = explode(',',array_keys($seriesY[$idx])[0]); // Pone el nombre asignado en la columna del SQl en $datosY_idx[0]
+					array_push(${'datosY_'.($idx+1)}, array_values($datossql)[array_values($seriesY[$idx])[0]]);          // Pone el valor de acuerdo al nombre de la columna
 				}
 				$pasoY = true;
 			}
 
 			if ($pasoY2 == false && strpos(strtoupper($key),'Y2_') !== false) { // Eje Y2
 				for ($idx=0; $idx<count($seriesY2); $idx++) {
-					if ($idx==0) {
-						if (empty($datosY2_1)) array_push($datosY2_1,array_keys($seriesY2[0])[0]);      // Pone el nombre asignado en la columna del SQl en $datosY2_1[0]
-						array_push($datosY2_1,array_values($datossql)[array_values($seriesY2[0])[0]]);  // Pone el valor de acuerdo al nombre de la columna
-					}
-					if ($idx==1) {
-						if (empty($datosY2_2)) array_push($datosY2_2,array_keys($seriesY2[1])[0]);      // Pone el nombre asignado en la columna del SQl en $datosY2_2[0]
-						array_push($datosY2_2,array_values($datossql)[array_values($seriesY2[1])[0]]);  // Pone el valor de acuerdo al nombre de la columna
-					}
+					if (empty(${'datosY2_'.($idx+1)})) ${'datosY2_'.($idx+1)} = explode(',',array_keys($seriesY2[$idx])[0]); // Pone el nombre asignado en la columna del SQl en $datosY2_idx[0]
+					array_push(${'datosY2_'.($idx+1)}, array_values($datossql)[array_values($seriesY2[$idx])[0]]);           // Pone el valor de acuerdo al nombre de la columna
 				}
 				$pasoY2 = true;
 			}
@@ -132,8 +119,8 @@ foreach ($traeDatos as $grafico) {                      // $traeDatos = todos lo
 
 	/* se determina que serie de Y2 es mayor para etiquetear el eje Y2, sino hay series $labelY2 = '' */
 	$vlrY2_1 = 0;  $vlrY2_2 = 0;
-	for ($j=1; $j<count($datosY2_1); $j++) $vlrY2_1 .= $datosY2_1[$j];
-	for ($j=1; $j<count($datosY2_2); $j++) $vlrY2_2 .= $datosY2_2[$j];
+	for ($j=1; $j<count($datosY2_1); $j++) $vlrY2_1 += $datosY2_1[$j];
+	for ($j=1; $j<count($datosY2_2); $j++) $vlrY2_2 += $datosY2_2[$j];
 	$labelY2 = empty($datosY2_1) ? '' : (empty($datosY2_2) ? $datosY2_1[0] : ($vlrY2_1 > $vlrY2_2) ? $datosY2_1[0] : $datosY2_2[0]);
 
 	switch (array_values($tipoDatos)[0]) {

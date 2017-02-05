@@ -14,7 +14,6 @@ class GraficosController extends Controller
 	public function actionIndex()
 	{
 		$traeDatos = Itemsgraficos::traerGraficos();
-
 		return $this->render('index',compact('traeDatos'));
 	}
 
