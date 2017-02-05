@@ -68,6 +68,7 @@ class Itemsgraficos extends \yii\db\ActiveRecord
 			 LEFT JOIN capitulos c ON c.extregnplantilla=p.regn
 			 LEFT JOIN itemsgraficos it ON c.extregnitemsg=it.regn
 		  WHERE p.regn=(SELECT extplantilla FROM clienteplantilla WHERE nit='8001417701') AND it.sql <> ''
+		  ORDER BY nombrecapitulo,titulo
 SQ;
 		$cmd = \Yii::$app->db->createCommand($sql);
 		return $cmd->queryAll();

@@ -11,7 +11,6 @@ function tipoGrafico($datos)
 {
 	$tipograf = [];
 	foreach($datos as $key=>$valor) {
-		$a = $key;
 		if ($key=='y') $tipograf[$key] = $valor;
 		if ($key=='y2') $tipograf[$key] = $valor;
 	}
@@ -26,7 +25,7 @@ function tipoGrafico($datos)
 /* Se determina que tipo de eje le corresponde a los nombres de las columnas del SQL */
 function tipoEje($datos)
 {
-	$tipoeje = [];   $ejeY = [];   $ejeY2 = [];
+	$ejeY = [];   $ejeY2 = [];
 	foreach($datos as $key=>$valor) {
 		if (strpos(strtoupper($key),'Y_') !== false) $ejeY[substr($key,2)] = substr($key,0,1);
 		if (strpos(strtoupper($key),'Y2_') !== false) $ejeY2[substr($key,3)] = substr($key,0,2);
@@ -35,7 +34,7 @@ function tipoEje($datos)
 }
 
 /* Si hay varios campos empezando con y_ */
-function serieDatosY1($datos)
+function serieDatosY($datos)
 {
 	$ejeY1 = [];  $i = 0;  $idx = 0;
 	foreach($datos as $key=>$valor) {
@@ -61,6 +60,11 @@ function serieDatosY2($datos)
 }
 
 $idGrafico = 0;
+$colorBarras = [0=>'#1f77b4',1=>'#a27e57',2=>'#4d88c8'];
+
+/**********************************************************************************************
+*                          Inicio de recorrido de gráficas por cliente                        *
+***********************************************************************************************/
 
 foreach ($traeDatos as $grafico) {                      // $traeDatos = todos los registros,  $grafico = un solo registro
 	$idGrafico++;
@@ -82,7 +86,7 @@ foreach ($traeDatos as $grafico) {                      // $traeDatos = todos lo
 		$i = 0;                                           // Indice del arreglo $datossql para extraer información
 		$tipoDatos = tipoGrafico($datossql);
 		$tipoEjes = tipoEje($datossql);
-		$seriesY  = serieDatosY1($datossql);
+		$seriesY  = serieDatosY($datossql);
 		$seriesY2 = serieDatosY2($datossql);
 		$pasoY = false;  $pasoY2 = false;
 
@@ -113,7 +117,11 @@ foreach ($traeDatos as $grafico) {                      // $traeDatos = todos lo
 
 	}  // foreach, fin del bucle con los datos de la Gráfica listos
 
-	$colors = [array_keys($tipoDatos)[0]=>'#1f77b4'];  // Las barras serán del color #1f77b4
+	// Solo asigna colores para barras
+	$colors = [];
+	for ($c=0; $c<count($tipoDatos); $c++) {
+		if (array_values($tipoDatos)[$c] == 'bar') $colors += [array_keys($tipoDatos)[$c]=>$colorBarras[$c]];
+	}
 	if (!empty($datosY2_1)) $colors[$datosY2_1[0]] = 'orange';
 	if (!empty($datosY2_2)) $colors[$datosY2_2[0]] = 'green';  //'#00d700' verde mas claro;
 
@@ -123,26 +131,21 @@ foreach ($traeDatos as $grafico) {                      // $traeDatos = todos lo
 	for ($j=1; $j<count($datosY2_2); $j++) $vlrY2_2 += $datosY2_2[$j];
 	$labelY2 = empty($datosY2_1) ? '' : (empty($datosY2_2) ? $datosY2_1[0] : ($vlrY2_1 > $vlrY2_2) ? $datosY2_1[0] : $datosY2_2[0]);
 
+	$capitulo = $grafico['nombrecapitulo'];
+	$titulo = $grafico['titulo'];
+
 	switch (array_values($tipoDatos)[0]) {
 		case 'bar':
 			echo $this->render('_grafBarras',
 				compact(
-					'idGrafico','datosY_1', 'datosY_2', 'datosY_3', 'datosY2_1','datosY2_2',
-					'tipoEjes','tipoDatos','colors','categorias','labelY2','labEjex'
+					'idGrafico','categorias','datosY_1', 'datosY_2', 'datosY_3', 'datosY2_1','datosY2_2',
+					'tipoEjes','tipoDatos','colors','labelY2','labEjex','capitulo','titulo'
 				)
 			);
 			break;
 		case 'pie':
-			echo $this->render('_grafBarras',
-				compact(
-					'idGrafico','datosY_1', 'datosY_2', 'datosY_3', 'datosY2_1','datosY2_2',
-					'tipoEjes','tipoDatos','colors','categorias','labelY2','labEjex'
-				)
-			);
+			echo $this->render('_grafPie',compact('idGrafico','categorias','datosY_1','labEjex','capitulo','titulo') );
 			break;
 	}
 
 }  // foreach
-
-?>
-

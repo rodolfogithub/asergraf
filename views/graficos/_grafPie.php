@@ -1,6 +1,13 @@
 <?php
-use yii\web\JsExpression;
 use yii2mod\c3\chart\Chart;
+
+/* Se crean las seriesY */
+for ($idx = 1; $idx <= 20; $idx++) ${'datos'.($idx)} = [];
+
+for ($i = 0; $i < count($datosY_1)-1; $i++) {
+	${'datos'.($i+1)} = explode(',',$categorias[$i]);
+	array_push(${'datos'.($i+1)}, $datosY_1[$i]);
+}
 ?>
 
 <style>
@@ -14,50 +21,34 @@ use yii2mod\c3\chart\Chart;
 		<div class='col-sm-8'>
 			<?php
 			echo Chart::widget([
-				'options' => ['id' => 'char'.$idGrafico],
 				'clientOptions' => [
 					'data' => [
-						'columns' => [$datosY_1, $datosY_2, $datosY_3, $datosY2_1, $datosY2_2],  // Hasta 3 series de datos sin contar con el eje x
-						'axes' => $tipoEjes,
-						'types' => $tipoDatos,
-						'colors'=> $colors,
-						/*'groups'=>[
-						[$datosY_1,$datosY2_1]
-						]*/
+						'columns' => [
+							$datos1,$datos2,$datos3,$datos4,$datos5,$datos6,$datos7,$datos8,$datos9,$datos10,
+							$datos11,$datos12,$datos13,$datos14,$datos15,$datos16,$datos17,$datos18,$datos19,$datos20
+						],
+						'type'=>'pie'
 					],
-					'grid' => ['y' => ['show' => true]],    // Muestra lineas horizontales
-					'size' => ['height'=>450],
 					'axis' => [
 						'x' => [
 							'type' => 'category',
-							'categories' => $categorias,
-							'label' => [],
 							'tick' => [
 								'rotate'=>30,
 								'multiline'=>false,
 								'height'=>130
 							]
 						],
-						'y' => [
-							'label' => [
-								'text' => !empty($datosY_1) ? $datosY_1[0] : '',
-								'position' => 'outer-middle',
-								'format' => new JsExpression('function (value,ratio) { console.log(value) }')
-							],
-							'tick'=>['format'=>new JsExpression(' function (d) { return accounting.formatMoney(d, " ", 0); }')],  // Formatea sin el signo $
-						],
-						'y2' =>  [
-							'show' => empty($datosY2_1) ? false : true,
-							'label' => [
-								'text' => $labelY2,
-								'position' => 'outer-middle'
-							],
-							'tick'=>['format'=>new JsExpression(' function (d) { return accounting.formatMoney(d, " ", 0); }')],  // Formatea sin el signo $
-						],
 					]
+					/*
+					pie: {
+					label: {
+					format: function (value, ratio, id) {
+					return d3.format('$')(value);
+					}
+					}
+					}      */
 				]
-				]
-			);
+			]);
 			?>
 		</div>
 		<div class='col-sm-4'>
@@ -69,7 +60,6 @@ use yii2mod\c3\chart\Chart;
 						<?php
 						if (!empty($datosY_2)) echo '<th>'.$datosY_2[0].'</th>';
 						if (!empty($datosY2_1)) echo '<th>'.$datosY2_1[0].'</th>';
-						if (!empty($datosY2_2)) echo '<th>'.$datosY2_2[0].'</th>';
 						?>
 					</tr>
 				</thead>
@@ -81,7 +71,6 @@ use yii2mod\c3\chart\Chart;
 						echo '<td align="right">'.number_format($datosY_1[$i+1]).'</td>';
 						if (!empty($datosY_2)) echo '<td align="center">'.number_format($datosY_2[$i+1]).'</td>';
 						if (!empty($datosY2_1)) echo '<td align="center">'.number_format($datosY2_1[$i+1]).'</td>';
-						if (!empty($datosY2_2)) echo '<td align="center">'.number_format($datosY2_2[$i+1]).'</td>';
 						echo '</tr>';
 					}
 
@@ -89,5 +78,6 @@ use yii2mod\c3\chart\Chart;
 				</tbody>
 			</table>
 		</div>
+
 	</div>
 </div>

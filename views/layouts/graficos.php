@@ -34,7 +34,7 @@ AppAsset::register($this);
 					<?= Html::img('@web/imagenes/c_encab1.png',['width'=>'85','class' => 'img-responsive center-block']);?>
 				</div>
 				<div class="col-sm-offset-8">
-					<?= Html::img('@web/imagenes/asercol.png',['width'=>'230','class' => 'img-responsive center-block']);?>
+					<?= Html::img('@web/imagenes/asercol.png',['width'=>'250','class' => 'img-responsive center-block']);?>
 				</div>
 			</div>
 
