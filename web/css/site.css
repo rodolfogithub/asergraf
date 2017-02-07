@@ -43,7 +43,34 @@ label {margin-bottom: 1px;}
 
 /* No me da tanto espacio a los lados, OJO aquí generalizamos, pero lo podemos poner por vista */
 @media (min-width: 1400px) {
-	.container {
-		width: 1350px;
-	}
+   .container {
+   width: 1350px;
+}
+}
+
+.divasercol {
+   height:30px;-webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px;
+   background: rgba(172,43,36,0.9);;-webkit-box-shadow: #B3B3B3 8px 8px 8px; font-size: 1.5em; color: white;
+   -moz-box-shadow: #B3B3B3 8px 8px 8px; box-shadow: #B3B3B3 8px 8px 8px;
+   padding-left: 30px; height:50px;
+}
+
+.menuasercol {
+   width:500px;height:30px;-webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px;
+   background: rgba(172,43,36,0.9);;-webkit-box-shadow: #B3B3B3 8px 8px 8px; font-size: 1.5em; color: white;
+   -moz-box-shadow: #B3B3B3 8px 8px 8px; box-shadow: #B3B3B3 8px 8px 8px;
+   padding-left: 30px;
+}
+
+.col-centered{
+   float: none;
+   margin: 0 auto;
+}
+
+@media all {
+   div.saltopagina { display: none; }
+}
+
+@media print{
+   div.saltopagina { display:block; page-break-before:always; }
 }
