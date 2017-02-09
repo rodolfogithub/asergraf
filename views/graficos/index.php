@@ -5,6 +5,8 @@ use yii\helpers\Html;
 
 $this->title = 'Gráficos estadísticos';
 
+app\assets\EstiloTabla::register($this);
+
 /**
 * Se determina que tipo de gráfico es para el Y y para el eje Y2
 */

@@ -44,14 +44,14 @@ class Itemsgraficos extends \yii\db\ActiveRecord
 
 	/**
 	* @inheritdoc
-	*/
+   */
 	public function attributeLabels()
 	{
 		return [
 			'regn' => 'Regn',
 			'titulo' => 'Titulo',
 			'nomgrafico' => 'Nombre del gráfico',
-			'sql' => 'Sql',
+			'sql' => 'Instrucción SQL',
 			'fechag' => 'Fechag',
 			'fecham' => 'Fecham',
 			'usuariog' => 'Usuariog',
@@ -73,6 +73,7 @@ SQ;
 		$cmd = \Yii::$app->db->createCommand($sql);
 		return $cmd->queryAll();
 	}
+
 
 	public function traeDatosSQL($sql)
 	{

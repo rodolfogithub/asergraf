@@ -19,6 +19,8 @@
 		  "yiisoft/yii2-bootstrap": "~2.0.0",
 		  "yiisoft/yii2-swiftmailer": "~2.0.0",
 		  "yii2mod/yii2-c3-chart": "*",
+        "kartik-v/yii2-dialog": "*",
+        "kartik-v/yii2-grid": "@dev",
 		  "phpoffice/phpexcel": "^1.8"
 	 },
 	 "require-dev": {

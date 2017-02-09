@@ -17,7 +17,7 @@ class AppAsset extends AssetBundle
 {
 	 public $basePath = '@webroot';
 	 public $baseUrl = '@web';
-	 public $css = ['css/site.css','css/EstiloTabla.css'];  // Común a todas las vistas
+	 public $css = ['css/site.css'];  // Común a todas las vistas
 	 public $js = ['js/accounting.min.js'];
 	 public $depends = ['yii\web\YiiAsset','yii\bootstrap\BootstrapAsset'];
 }
