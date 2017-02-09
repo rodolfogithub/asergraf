@@ -12,7 +12,7 @@ use yii\web\AssetBundle;
 /**
 * @author Rodolfo Arias <rodolfo.arias.as>
 */
-class Itemsgrafico extends AssetBundle
+class Itemgrafico extends AssetBundle
 {
    public $basePath = '@webroot';
    public $baseUrl  = '@web';

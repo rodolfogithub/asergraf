@@ -12,8 +12,6 @@ class ItemsgraficosController extends Controller
 {
    public function actionItems()
    {
-      $traeDatos = Itemsgraficos::traerGraficos();
-
       /* Trae todos los itemsgraficos */
       $datosItems = new ActiveDataProvider([
          'query' => Itemsgraficos::find()->indexBy('regn'),
@@ -46,7 +44,7 @@ class ItemsgraficosController extends Controller
             return $this->render('/site/errors', ['errors' => $errors, 'modulo' => 'en creación de ciclos']);
          }
       } else {
-         return $this->renderAjax('formItems', ['model' => $model, 'modo' => 'C']);
+         return $this->renderAjax('formItem', ['model' => $model, 'modo' => 'C']);
       }
    }
 
@@ -81,7 +79,7 @@ class ItemsgraficosController extends Controller
             return $this->render('/site/errors', ['errors' => $errors, 'modulo' => 'en actualización de item']);
          }
       } else
-         return $this->renderAjax('formItems', ['model' => $model, 'modo' => 'A']);
+         return $this->renderAjax('formItem', ['model' => $model, 'modo' => 'A']);
    }
 
 

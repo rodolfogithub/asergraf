@@ -17,6 +17,7 @@ use Yii;
 * @property string $usuariom
 * @property string $activo
 */
+
 class Itemsgraficos extends \yii\db\ActiveRecord
 {
 	/**
@@ -64,7 +65,7 @@ class Itemsgraficos extends \yii\db\ActiveRecord
 	public function traerGraficos()
 	{
 		$sql = <<<SQ
-		  SELECT p.nombreplantilla, c.nombrecapitulo, it.titulo, it.sql FROM plantilla p
+		  SELECT p.nombreplantilla, c.nombrecapitulo, it.titulo, it.sql FROM plantillas p
 			 LEFT JOIN capitulos c ON c.extregnplantilla=p.regn
 			 LEFT JOIN itemsgraficos it ON c.extregnitemsg=it.regn
 		  WHERE p.regn=(SELECT extplantilla FROM clienteplantilla WHERE nit='8001417701') AND it.sql <> ''

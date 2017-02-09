@@ -7,6 +7,10 @@ $this->title = 'Gráficos estadísticos';
 
 app\assets\EstiloTabla::register($this);
 
+$this->title = 'Gráficos';
+
+echo yii\helpers\Html::a('<span class="pull-right glyphicon glyphicon-sunglasses"><span style="font-family: Helvetica; font-size: 1.5em">&nbsp;Inicio',
+   ['/graficos']);
 /**
 * Se determina que tipo de gráfico es para el Y y para el eje Y2
 */

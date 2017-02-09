@@ -1,9 +1,6 @@
 <?php
 
-$this->registerCss('
-   .pagination {margin: -5px 0}
-   .modal-lg { width: 1010px;}
-');
+$this->registerCss('.pagination {margin: -5px 0} ');
 
 use
 yii\bootstrap\Modal,
@@ -13,10 +10,9 @@ yii\widgets\Pjax,
 kartik\dialog\Dialog,
 kartik\grid\GridView;
 
-app\assets\Itemgrafico::register($this);
+app\assets\Plantillas::register($this);
 
-$this->title = 'Datos de Item Gráfico';
-//$this->params['breadcrumbs'][] = ['label' => 'Gestión de datos', 'url' => ['index']];
+$this->title = 'Datos de Plantillas';
 $this->params['breadcrumbs'][] = $this->title;
 
 /* El echo no muestra nada, solo para activar el asset bundle http://demos.krajee.com/dialog */
@@ -25,30 +21,28 @@ echo Dialog::widget([ 'options' => ['draggable'=>true] ]);
 /****************************************************************************************************************/
 /*********************************************** VENTANAS MODALES ***********************************************/
 
-// Se muestra una ventana modal utilizando un formulario en views/itemsgrafico/formitemsgrafico.php
-echo Html::button('Crear Item Gráfico',[
-   'data-url'=>Url::toRoute('/itemsgraficos/crea-item'),
+// Se muestra una ventana modal utilizando un formulario en views/plantillas/formplantilla.php
+echo Html::button('Crear Plantilla',[
+   'data-url'=>Url::toRoute('/plantillas/crea-plantilla'),
    'class'=>'btn btn-success','style'=>'margin-bottom:30px;',
-   'id'=>'botonCreaItem'
+   'id'=>'botonCreaPlantilla'
 ]);
 Modal::begin([
-   'header'=>'<h3 style="text-align:center;background:#B44039;color:white"><span style="font-family:tahoma">Crear Item Gráfico</h3>',
-   'id'=>'modalCreaItem',
-   'size'=>'modal-lg'
+   'header'=>'<h3 style="text-align:center;background:#B44039;color:white"><span style="font-family:tahoma">Crear Plantilla</h3>',
+   'id'=>'modalCreaPlantilla'
 ]);
-echo '<div id="contenidoCreaItem"></div>';
+echo '<div id="contenidoCreaPlantilla"></div>';
 Modal::end();
 
 
 /**
-* Se muestra una ventana modal utilizando un formulario en views/itemsgrafico/formitems.php, actualiza
+* Se muestra una ventana modal utilizando un formulario en views/plantillas/formplantilla.php, actualiza
 */
 Modal::begin([
-   'header'=>'<h3 style="text-align:center;background:#ceffe7">Actualiza Item Gráfico</h3>',
-   'id'=>'modalActItem',
-   'size'=>'modal-lg'
+   'header'=>'<h3 style="text-align:center;background:#ceffe7">Actualiza Plantilla</h3>',
+   'id'=>'modalActPlantilla'
 ]);
-echo '<div id="contenidoActItem"></div>';
+echo '<div id="contenidoActPlantilla"></div>';
 Modal::end();
 /****************************************************************************************************************/
 
@@ -59,27 +53,11 @@ $columnas = [
       'headerOptions' => ['style'=>'width:40px; text-align:center'],
       'contentOptions' => ['style' => 'width:40px; text-align:center;vertical-align:middle'],  // not max-width
    ],
-   //   ['class' => 'yii\grid\CheckboxColumn'],
    [
-      'attribute'=>'titulo',
+      'attribute'=>'nombreplantilla',
       'hAlign'=>'left',
       'vAlign'=>'middle',
       'width'=>'300px',
-   ],
-   [
-      'attribute'=>'nomgrafico',
-      'hAlign'=>'left',
-      'vAlign'=>'middle',
-      'width'=>'250px',
-      'pageSummary'=>true
-   ],
-   [
-      'attribute'=>'sql',
-      'hAlign'=>'left',
-      'vAlign'=>'middle',
-      'width'=>'450px',
-      'pageSummary'=>true ,
-      //'format' => 'html',
    ],
    [
       'class' => 'yii\grid\ActionColumn',
@@ -90,16 +68,16 @@ $columnas = [
       'template' => '{update} {delete}',
       'buttons' => [
          'update'=>function ($url, $model) {
-            $url = Url::to(['actualiza-item', 'regn' => $model->regn, 'titulo' => $model->titulo]);
+            $url = Url::to(['actualiza-plantilla', 'regn' => $model->regn, 'nombreplantilla' => $model->nombreplantilla]);
             return Html::button('<span class="glyphicon glyphicon-pencil"></span>',
-               ['data-url'=>Url::to($url), 'class' => 'btn btn-default btn-xs botonActItem']);
+               ['data-url'=>Url::to($url), 'class' => 'btn btn-default btn-xs botonActPlantilla']);
          },
          'delete' => function ($url, $model) {
-            $url = Url::toRoute(['borraitem']);
+            $url = Url::toRoute(['borraplantilla']);
             return Html::a('', $url, [
-               'class'       => 'btn btn-xs glyphicon glyphicon-trash borra-item',
+               'class'       => 'btn btn-xs glyphicon glyphicon-trash borra-plantilla',
                'data-regn'   => Yii::$app->funcion->cifrar($model->regn,date('d')),
-               'data-titulo' => $model->titulo,
+               'data-nombre' => $model->nombreplantilla,
                'data-url'    => $url,
             ]);
          },
@@ -107,9 +85,9 @@ $columnas = [
    ],
 ]; //$columnas
 
-Pjax::begin(['id'=>'grillaItems']);
+Pjax::begin(['id'=>'grillaPlantillas']);
 echo GridView::widget([
-   'dataProvider' => $datosItems,
+   'dataProvider' => $datosPlantillas,
    'columns' => $columnas,
    'responsive'=>true,
    'hover'=>true,
