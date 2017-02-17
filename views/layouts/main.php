@@ -27,7 +27,7 @@ AppAsset::register($this);
 		<div class="wrap">
 			<?php
 			NavBar::begin([
-				'brandLabel' => 'ASERCOL SIA',
+				'brandLabel' => Yii::$app->params['empresa'],
 				'brandUrl' => Yii::$app->homeUrl,
 				'options' => [
 					'class' => 'navbar-inverse navbar-fixed-top',
@@ -64,7 +64,7 @@ AppAsset::register($this);
 
 		<footer class="footer">
 			<div class="container">
-				<p class="pull-left">&copy; ASERCOL SIA <?= date('Y') ?></p>
+				<p class="pull-left">&copy; <?=Yii::$app->params['empresa'].' '.date('Y') ?></p>
 			</div>
 		</footer>
 

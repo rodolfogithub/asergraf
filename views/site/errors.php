@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 
 $this->title = 'Error';
-$this->params['breadcrumbs'][] = ['label' => 'Inicio', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

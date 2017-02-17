@@ -12,6 +12,6 @@ echo yii\helpers\Html::a('<span class="glyphicon glyphicon-sunglasses"><span sty
    ['/itemsgraficos/items']).'<br><br>';
 
 echo yii\helpers\Html::a('<span class="glyphicon glyphicon-sunglasses"><span style="font-family: Helvetica; font-size: 1.5em">&nbsp;Crear Plantillas',
-   ['/plantillas/plantillas']).'<br><br>';
+   ['/plantillas/grilla-plantillas']).'<br><br>';
 
 ?>

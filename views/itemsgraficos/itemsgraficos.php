@@ -1,9 +1,6 @@
 <?php
 
-$this->registerCss('
-   .pagination {margin: -5px 0}
-   .modal-lg { width: 1010px;}
-');
+$this->registerCss('.pagination {margin: -5px 0} .modal-lg { width: 1010px;}');
 
 use
 yii\bootstrap\Modal,
