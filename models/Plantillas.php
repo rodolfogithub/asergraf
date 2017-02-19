@@ -39,7 +39,7 @@ class Plantillas extends \yii\db\ActiveRecord
 		];
 	}
 
-	public function traerCapitulosItems($regn)
+	static function traerCapitulosItems($regn)
 	{
 		$sql = <<<SQ
 			SELECT l.regn AS reglistacap, it.regn AS regitems, c.nombrecapitulo, it.titulo FROM plantillas p

@@ -2,6 +2,7 @@
 use
 yii\helpers\Html,
 yii\widgets\ActiveForm,
+yii\widgets\Pjax,
 kartik\sortinput\SortableInput;
 
 $script = <<<JS
@@ -60,7 +61,16 @@ $form = ActiveForm::begin();
 	</div>
 
 	<div class="col-sm-4">
-		<div class='row' style='margin: 0px 5px 10px 5px;'>
+		<div class='row'>
+			<div class='col-sm-10'>
+				<?= Html::input('text', 'listaItems', Yii::$app->request->post('listaItems'), ['class' => 'form-control']) ?>
+			</div>
+			<div class='col-sm-1'>
+				<?= Html::submitButton('<span class="glyphicon glyphicon-download-alt"></span>', ['class' => 'btn btn-primary', 'name' => 'escogeItems']) ?>
+			</div>
+		</div>
+
+		<div class='row' style='margin: 10px 0px 10px 0px;'>
 			<div class='col-sm-12 text-center' style='height: 30px;background:rgba(248,223,222,0.9);padding-top: 3px; font-size: 1.3em;'>
 				<?='ITEMS DISPONIBLES'?>
 			</div>
@@ -82,6 +92,6 @@ $form = ActiveForm::begin();
 </div>
 
 <?php
-echo '<br>'.Html::submitButton('Grabar cambios', ['class'=>'btn btn-primary']);
+echo '<br>'.Html::submitButton('Grabar cambios', ['class'=>'btn btn-primary', 'name' => 'grabaCambios']);
 
 $form->end();

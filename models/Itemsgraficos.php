@@ -45,7 +45,7 @@ class Itemsgraficos extends \yii\db\ActiveRecord
 
 	/**
 	* @inheritdoc
-   */
+	*/
 	public function attributeLabels()
 	{
 		return [
@@ -62,21 +62,21 @@ class Itemsgraficos extends \yii\db\ActiveRecord
 	}
 
 
-	public function traerGraficos()
+	static function traerGraficos()
 	{
 		$sql = <<<SQ
 		  SELECT p.nombreplantilla, c.nombrecapitulo, it.titulo, it.sql FROM plantillas p
 			 LEFT JOIN capitulos c ON c.extregnplantilla=p.regn
 			 LEFT JOIN itemsgraficos it ON c.extregnitemsg=it.regn
-		  WHERE p.regn=(SELECT extplantilla FROM clienteplantilla WHERE nit='8001417701') AND it.sql <> ''
-		  ORDER BY nombrecapitulo,titulo
+		  WHERE p.regn=(SELECT extplantilla FROM clienteplantilla WHERE nit='8001417701') AND it.sql <> '' AND ordenitems > 0
+		  ORDER BY c.ordencapitulos,c.ordenitems
 SQ;
 		$cmd = \Yii::$app->db->createCommand($sql);
 		return $cmd->queryAll();
 	}
 
 
-	public function traeDatosSQL($sql)
+	static function traeDatosSQL($sql)
 	{
 		Yii::$app->db->createCommand("SET lc_time_names = 'es_ES';")->execute();
 		$cmd = \Yii::$app->db->createCommand($sql);

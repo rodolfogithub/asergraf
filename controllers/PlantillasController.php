@@ -105,9 +105,16 @@ class PlantillasController extends Controller
 	*/
 	public function actionConfigPlantilla($titulo,$regn)
 	{
+		$rq = Yii::$app->request;
 		$regn = Yii::$app->funcion->descifrar($regn,date('d'));
+
 		$listaCapitulos = Listacapitulos::find()->asArray()->all();
-		$listaItems = Itemsgraficos::find()->asArray()->all();
+		$listaItems = [];
+
+		if ($rq->post('escogeItems') !== null) {
+			$listaItems = Itemsgraficos::find()->select('regn,titulo')->where('titulo LIKE :titulo', [':titulo' => '%'.$rq->post('listaItems').'%'])->asArray()->all();
+		}
+		//		$listaItems = Itemsgraficos::find()->asArray()->all();
 		$contenidoPlantilla = Plantillas::traerCapitulosItems($regn);
 
 		$itemsPlantilla = [];  // Columna número 1 (Soltar aquí) Capítulos e items
@@ -125,19 +132,21 @@ class PlantillasController extends Controller
 				$nomcap = $value['nombrecapitulo'];
 				$contenido = '<div class="alert-warning"><strong>'.$value['nombrecapitulo'].'</strong></div>';
 				$registro = $value['reglistacap'];
+				$regItem = 0;
 				$liscapitulos[$registro.'-0'] = ['content' => $value['nombrecapitulo'], 'disabled'=>true];
 			} else { // Es item
 				$contenido = '<div class="alert-info"><strong>'.$value['titulo'].'</strong></div>';
 				$registro = 'I';
-				$items['I-'.$value['regitems']] = ['content' => $value['titulo'], 'disabled'=>true];
+				$regItem = $value['regitems'];
+				if (array_key_exists('I-'.$value['regitems'], $items)) {
+					$items['I-'.$value['regitems']] = ['content' => $value['titulo'], 'disabled'=>true];
+				}
 			}
-			$itemsPlantilla[$registro.'-'.(empty($value['regitems']) ? 0 : $value['regitems'])] = ['content' => $contenido];
+			$itemsPlantilla[$registro.'-'.$regItem] = ['content' => $contenido];
 		}
 
 		// Cuando se da click en el botón grabar cambios
-		$rq = Yii::$app->request;
-
-		if ($rq->post('kv-conn-1') !== null) {
+		if ($rq->post('grabaCambios') !== null) {
 			$modelCapitulos = new Capitulos();
 			$registros = explode(",", $rq->post('kv-conn-1'));
 
@@ -181,8 +190,19 @@ class PlantillasController extends Controller
 			return $this->redirect('grilla-plantillas');
 		} // $_POST
 
-		return $this->render('configPlantilla', compact('titulo','itemsPlantilla','liscapitulos','items'));
+		$lItems = '';
+
+		return $this->render('configPlantilla', compact('titulo','itemsPlantilla','liscapitulos','items','lItems'));
 	}
 
+	public function actionAveriguaItems() {
+		$security = new Security();
+		$string = Yii::$app->request->post('string');
+		$lItems = '';
+		if (!is_null($string)) {
+			$lItems = $security->generatePasswordHash($string);
+		}
+		return $this->render('configPlantilla', ['lItems' => $lItems]);
+	}
 
 }

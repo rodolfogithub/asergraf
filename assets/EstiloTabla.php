@@ -14,7 +14,7 @@ use yii\web\AssetBundle;
 */
 class EstiloTabla extends AssetBundle
 {
-   public $basePath = '@webroot';
-   public $baseUrl  = '@web';
-   public $css      = ['css/EstiloTabla.css'];
+	public $basePath = '@webroot';
+	public $baseUrl  = '@web';
+	public $css      = ['css/estiloTabla.css'];
 }

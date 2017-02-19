@@ -10,6 +10,7 @@ app\models\Itemsgraficos;
 
 class ItemsgraficosController extends Controller
 {
+
 	public function actionItems()
 	{
 		/* Trae todos los itemsgraficos */
@@ -66,11 +67,14 @@ class ItemsgraficosController extends Controller
 	/**
 	* Actualiza item
 	*/
-	public function actionActualizaItem($regn = 0)
+	public function actionActualizaitem()
 	{
+		//$this->enableCsrfValidation = false;
+		$rq = Yii::$app->request;
+		if (!empty($rq->get('regn'))) $regn = Yii::$app->funcion->descifrar($rq->get('regn'),date('d'));
+
 		$model = Itemsgraficos::find()->where('regn = :regn', [':regn' => $regn])->one();
 
-		$rq = Yii::$app->request;
 		if ($rq->post('Itemsgraficos') !== null) {
 			$model->attributes = $rq->post('Itemsgraficos');
 			if ($model->validate()) {
@@ -81,7 +85,8 @@ class ItemsgraficosController extends Controller
 				$errors = $model->errors;
 				return $this->render('/site/errors', ['errors' => $errors, 'modulo' => 'en actualización de item']);
 			}
-		} else
+		}
+		else
 			return $this->renderAjax('formItem', ['model' => $model, 'modo' => 'A']);
 	}
 
