@@ -14,8 +14,8 @@ use yii\web\AssetBundle;
 */
 class Plantillas extends AssetBundle
 {
-   public $basePath = '@webroot';
-   public $baseUrl  = '@web';
-   public $js       = ['js/plantilla.js'];
-   public $depends  = ['yii\web\YiiAsset','yii\bootstrap\BootstrapAsset'];
+	public $basePath = '@webroot';
+	public $baseUrl  = '@web';
+	public $js       = ['js/plantilla.js'];    // En producción busca plantilla.min.js
+	public $depends  = ['yii\web\YiiAsset','yii\bootstrap\BootstrapAsset'];
 }

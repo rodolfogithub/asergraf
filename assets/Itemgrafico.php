@@ -14,8 +14,8 @@ use yii\web\AssetBundle;
 */
 class Itemgrafico extends AssetBundle
 {
-   public $basePath = '@webroot';
-   public $baseUrl  = '@web';
-   public $js       = [YII_ENV_DEV ? 'js/item.js' : 'js/item.min.js'];
-   public $depends  = ['yii\web\YiiAsset','yii\bootstrap\BootstrapAsset'];
+	public $basePath = '@webroot';
+	public $baseUrl  = '@web';
+	public $js       = [YII_ENV_DEV ? 'js/item.js' : 'js/item.min.js'];
+	public $depends  = ['yii\web\YiiAsset','yii\bootstrap\BootstrapAsset'];
 }

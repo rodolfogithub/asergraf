@@ -5,6 +5,7 @@ namespace app\controllers;
 use
 Yii,
 yii\data\ActiveDataProvider,
+yii\filters\VerbFilter,
 yii\web\Controller,
 app\models\Capitulos,
 app\models\Itemsgraficos,
@@ -13,8 +14,31 @@ app\models\Plantillas;
 
 class PlantillasController extends Controller
 {
+	//public $layout = 'graficos';
 
-	public $layout = 'graficos';
+	/**
+	* @inheritdoc
+	*/
+	public function behaviors()
+	{
+		return [
+			'verbs' => [
+				'class' => VerbFilter::className(),
+				'actions' => [
+					'delete' => ['POST'],
+				],
+			],
+		];
+	}
+
+	/**
+	* @inheritdoc
+	*/
+	public function actions()
+	{
+		return [ 'error' => ['class' => 'yii\web\ErrorAction'] ];
+	}
+
 
 	/**
 	* Solamente se genera la grilla donde se muestra las plantillas creadas
@@ -45,13 +69,13 @@ class PlantillasController extends Controller
 			$model->fechag = date('Y-m-d H:i:s');
 			if ($model->validate()) {
 				if ($model->save()) {
-					return $this->redirect('plantillas');
+					return $this->redirect('grilla-plantillas');
 				} else {
 					echo 0;
 				}
 			} else {
 				// validation failed: $errors is an array containing error messages
-				$errors = $model->errors;
+				$errors[0] = [1=>'Al crear plantilla'];
 				return $this->render('/site/errors', ['errors' => $errors, 'modulo' => 'en creación de ciclos']);
 			}
 		} else {
@@ -64,12 +88,13 @@ class PlantillasController extends Controller
 	*/
 	public function actionBorraPlantilla()
 	{
-		if (Yii::$app->request->post('regn') !== null) {
-			$regn = Yii::$app->funcion->descifrar(Yii::$app->request->post('regn'), date('d'));
+		if (Yii::$app->request->get('regn') !== null) {
+			$regn = Yii::$app->funcion->descifrar(Yii::$app->request->get('regn'), date('d'));
 			Plantillas::deleteAll('regn = :regn', [':regn' => $regn]);
-			return $this->redirect('plantillas');
+			return Yii::$app->response->redirect(['plantillas/grilla-plantillas']);
 		}  else {
-			echo 0;//json_encode(['estado' => 'failed']);
+			$errors[0] = [1=>'Al borrar plantilla con registro ('.$_GET['regn'].')'];
+			return $this->render('/site/errors', ['errors' => $errors, 'modulo' => 'en actualización de item']);
 		}
 	}
 
@@ -87,7 +112,7 @@ class PlantillasController extends Controller
 			$model->attributes = $rq->post('Plantillas');
 			if ($model->validate()) {
 				$model->save();
-				return $this->redirect('plantillas');
+				return $this->redirect('grilla-plantillas');
 			} else {
 				// validation failed: $errors is an array containing error messages
 				$errors = $model->errors;

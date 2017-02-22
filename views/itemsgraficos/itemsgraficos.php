@@ -13,24 +13,21 @@ kartik\grid\GridView;
 app\assets\Itemgrafico::register($this);
 
 $this->title = 'Datos de Item Gráfico';
-//$this->params['breadcrumbs'][] = ['label' => 'Gestión de datos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
-echo Html::beginForm();
 
 /* El echo no muestra nada, solo para activar el asset bundle http://demos.krajee.com/dialog */
 echo Dialog::widget([ 'options' => ['draggable'=>true] ]);
 
 /****************************************************************************************************************/
 /*********************************************** VENTANAS MODALES ***********************************************/
-
 // Se muestra una ventana modal utilizando un formulario en views/itemsgrafico/formitemsgrafico.php
+
 echo Html::button('Crear Item Gráfico',[
 	'value'=>Url::to('crea-item'),
-	'class'=>'btn btn-success','style'=>'margin-bottom:30px;',
+	'class'=>'btn btn-success botonCreaItem','style'=>'margin-bottom:30px;',
 	'id'=>'botonCreaItem'
 ]);
-echo '<h2>1.3</h2>';
+
 Modal::begin([
 	'header'=>'<h3 style="text-align:center;background:#B44039;color:white"><span style="font-family:tahoma">Crear Item Gráfico</h3>',
 	'id'=>'modalCreaItem',
@@ -38,8 +35,6 @@ Modal::begin([
 ]);
 echo '<div id="contenidoCreaItem"></div>';
 Modal::end();
-
-
 /**
 * Se muestra una ventana modal utilizando un formulario en views/itemsgrafico/formitems.php, actualiza
 */
@@ -90,25 +85,24 @@ $columnas = [
 		'template' => '{update} {delete}',
 		'buttons' => [
 			'update'=>function ($url, $model) {
-				$url = Url::to(['actualizaitem', 'regn' => Yii::$app->funcion->cifrar($model->regn,date('d'))]);
+				$url = Url::to(['actualiza-item', 'regn' => Yii::$app->funcion->cifrar($model->regn,date('d'))]);
 				return Html::button('<span class="glyphicon glyphicon-pencil"></span>', [
-					'value'=>$url, 'class' => 'btn btn-default btn-xs botonActItem'
+					'data-url'=>Url::to($url), 'class' => 'btn btn-default btn-xs botonActItem'
 				]);
 			},
 			'delete' => function ($url, $model) {
-				$url = Url::toRoute(['borraitem']);
+				$url = Url::toRoute(['borra-item']);
 				return Html::a('', $url, [
-					'class'       => 'btn btn-xs glyphicon glyphicon-trash borra-item',
-					'data-regn'   => Yii::$app->funcion->cifrar($model->regn,date('d')),
-					'data-titulo' => $model->titulo,
-					'data-url'    => $url
+					'class'     => 'btn btn-xs glyphicon glyphicon-trash borra-item',
+					'data-regn' => Yii::$app->funcion->cifrar($model->regn,date('d')),
+					'data-url'  => $url,
 				]);
 			},
 		],
 	],
 ]; //$columnas
 
-Pjax::begin(['id'=>'grillaItems']);
+//Pjax::begin(['id'=>'grillaItems']);
 echo GridView::widget([
 	'dataProvider' => $datosItems,
 	'columns' => $columnas,
@@ -119,6 +113,5 @@ echo GridView::widget([
 	// 'pjax' => true,
 	'rowOptions' => ['class' => GridView::TYPE_ACTIVE]
 ]);
-Pjax::end();
+//Pjax::end();
 
-echo Html::endForm();

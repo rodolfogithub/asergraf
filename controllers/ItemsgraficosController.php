@@ -5,11 +5,35 @@ namespace app\controllers;
 use
 Yii,
 yii\data\ActiveDataProvider,
+yii\filters\VerbFilter,
 yii\web\Controller,
 app\models\Itemsgraficos;
 
 class ItemsgraficosController extends Controller
 {
+	/**
+	* @inheritdoc
+	*/
+	public function behaviors()
+	{
+		return [
+			'verbs' => [
+				'class' => VerbFilter::className(),
+				'actions' => [
+					'delete' => ['POST'],
+				],
+			],
+		];
+	}
+
+	/**
+	* @inheritdoc
+	*/
+	public function actions()
+	{
+		return [ 'error' => ['class' => 'yii\web\ErrorAction'] ];
+	}
+
 
 	public function actionItems()
 	{
@@ -53,27 +77,27 @@ class ItemsgraficosController extends Controller
 	/**
 	* Borra item, acción viene de gridview
 	*/
-	public function actionBorraitem()
+	public function actionBorraItem()
 	{
-		if (Yii::$app->request->post('regn') !== null) {
-			$regn = Yii::$app->funcion->descifrar(Yii::$app->request->post('regn'), date('d'));
+		if (Yii::$app->request->get('regn') !== null) {
+			$regn = Yii::$app->funcion->descifrar(Yii::$app->request->get('regn'), date('d'));
 			Itemsgraficos::deleteAll('regn = :regn', [':regn' => $regn]);
-			return $this->redirect('items');
+			return Yii::$app->response->redirect(['itemsgraficos/items']);
 		}  else {
-			echo 0;//json_encode(['estado' => 'failed']);
+			$errors[0] = [1=>'Al borrar item'];
+			return $this->render('/site/errors', ['errors' => $errors, 'modulo' => 'en actualización de item']);
 		}
 	}
 
 	/**
 	* Actualiza item
 	*/
-	public function actionActualizaitem()
+	public function actionActualizaItem($regn)
 	{
-		//$this->enableCsrfValidation = false;
-		$rq = Yii::$app->request;
-		if (!empty($rq->get('regn'))) $regn = Yii::$app->funcion->descifrar($rq->get('regn'),date('d'));
-
+		$regn = Yii::$app->funcion->descifrar($regn,date('d'));
 		$model = Itemsgraficos::find()->where('regn = :regn', [':regn' => $regn])->one();
+
+		$rq = Yii::$app->request;
 
 		if ($rq->post('Itemsgraficos') !== null) {
 			$model->attributes = $rq->post('Itemsgraficos');

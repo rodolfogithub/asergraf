@@ -20,13 +20,14 @@ echo Dialog::widget([ 'options' => ['draggable'=>true] ]);
 
 /****************************************************************************************************************/
 /*********************************************** VENTANAS MODALES ***********************************************/
-
 // Se muestra una ventana modal utilizando un formulario en views/plantillas/formplantilla.php
+
 echo Html::button('Crear Plantilla',[
-	'data-url'=>Url::toRoute('/plantillas/crea-plantilla'),
-	'class'=>'btn btn-success','style'=>'margin-bottom:30px;',
+	'value'=>Url::to('crea-plantilla'),
+	'class'=>'btn btn-success botonCreaPlantilla','style'=>'margin-bottom:30px;',
 	'id'=>'botonCreaPlantilla'
 ]);
+
 Modal::begin([
 	'header'=>'<h3 style="text-align:center;background:#B44039;color:white"><span style="font-family:tahoma">Crear Plantilla</h3>',
 	'id'=>'modalCreaPlantilla'
@@ -68,21 +69,21 @@ $columnas = [
 		'buttons' => [
 			'update'=>function ($url, $model) {
 				$url = Url::to(['actualiza-plantilla', 'regn' => $model->regn, 'nombreplantilla' => $model->nombreplantilla]);
-				return Html::button('<span class="glyphicon glyphicon-pencil"></span>',
-					['data-url'=>Url::to($url), 'class' => 'btn btn-default btn-xs botonActPlantilla']);
+				return Html::button('<span class="glyphicon glyphicon-pencil"></span>',[
+					'data-url'=>Url::to($url), 'class' => 'btn btn-default btn-xs botonActPlantilla'
+				]);
 			},
-			'delete'=>function ($url, $model) {
-				$url = Url::toRoute(['borraplantilla']);
+			'delete' => function ($url, $model) {
+				$url = Url::toRoute(['borra-plantilla']);
 				return Html::a('', $url, [
-					'class'       => 'btn btn-xs glyphicon glyphicon-trash borra-plantilla',
-					'data-regn'   => Yii::$app->funcion->cifrar($model->regn,date('d')),
-					'data-nombre' => $model->nombreplantilla,
-					'data-url'    => $url,
+					'class'     => 'btn btn-xs glyphicon glyphicon-trash borra-plantilla',
+					'data-regn' => Yii::$app->funcion->cifrar($model->regn,date('d')),
+					'data-url'  => $url,
 				]);
 			},
 			'view'=>function ($url, $model) {
 				$url = Url::to(['config-plantilla', 'titulo'=>$model->nombreplantilla,'regn'=>Yii::$app->funcion->cifrar($model->regn,date('d'))]);
-			 //  $url = Url::toRoute(['config-plantilla']);
+				//  $url = Url::toRoute(['config-plantilla']);
 				return Html::a('', $url, ['class' => 'btn btn-xs glyphicon glyphicon-sort-by-attributes']);
 			},
 		],

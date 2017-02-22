@@ -1,4 +1,4 @@
-<?php $form = yii\widgets\ActiveForm::begin(['id'=>$model->formName()]) ?>
+<?php $form = yii\widgets\ActiveForm::begin(); ?>
 
 <div class='container-fluid'> <!-- OJO, container-fluid para efectos del modal -->
 	<div class='row'>
